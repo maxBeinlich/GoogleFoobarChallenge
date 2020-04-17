@@ -1,7 +1,10 @@
 """
 ========================================================
 Google Foobar challenge - Level 2, Challenge 1
-=========================================================
+========================================================
+
+Ion Flux Relabeling
+===================
 
 Oh no! Commander Lambda's latest experiment to improve the efficiency of her 
 LAMBCHOP doomsday device has backfired spectacularly. She had been improving 
@@ -34,6 +37,7 @@ and two leaf nodes, h = 3 represents a perfect binary tree with the root, two in
 nodes and four leaf nodes (like the example above), and so forth.  The lists q and p 
 contain at least one but no more than 10000 distinct integers, all of which will be 
 between 1 and 2^h-1, inclusive.
+
 
 Input:
 solution.solution(3, [7, 3, 5, 1])
