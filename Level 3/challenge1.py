@@ -52,3 +52,23 @@ solution.solution('2', '1')
 Output:
     1
 """
+
+def solution(M, F):
+    m, f = int(M), int(F)
+    if (m % 2 == 0 and f % 2 == 0) or (m == f and m != 1):
+        return "impossible"
+    i = 0
+    while m > 1 or f > 1:
+        p = 1
+        if m > f:
+            p = int((m - 1) / f)
+            m -= abs(f) * p
+        elif f > m:
+            p = int((f - 1) / m)
+            f -= abs(m) * p
+        elif f == m:
+            return "impossible" 
+        i += 1 * p
+    return str(i)
+
+print(solution("4", "7"))
