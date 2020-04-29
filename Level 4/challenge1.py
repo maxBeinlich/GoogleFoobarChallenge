@@ -1,6 +1,6 @@
 """
 ========================================================
-Google Foobar challenge - Level 3, Challenge 3
+Google Foobar challenge - Level 4, Challenge 1
 ========================================================
 
 Running with Bunnies
@@ -77,3 +77,43 @@ solution.solution([[0, 1, 1, 1, 1], [1, 0, 1, 1, 1], [1, 1, 0, 1, 1],
 Output:
     [0, 1]
 """
+
+import itertools as it
+
+def bellman_ford(matrix):
+    res = []
+    m_range = range(len(matrix))
+    for i in m_range:
+        res.append(matrix[i][:])
+        for _ in m_range:
+            for u in m_range:
+                for v in m_range:
+                    w = matrix[u][v]
+                    if u != v and res[i][v] > res[i][u] + w:
+                        res[i][v] = res[i][u] + w
+                
+        for u in m_range:
+            for v in m_range:
+                w = matrix[u][v]
+                if u != v and res[i][v] > res[i][u] + w:
+                    return []
+    return res
+
+def solution(times, time_limit):
+    node_count = len(times)
+    bunnies = [i for i in range(node_count-2)]
+    times = bellman_ford(times)
+    if times == []:
+        return bunnies
+    for i in range(node_count-2, 0, -1):
+        for b in it.permutations(bunnies, i):
+            path = [-1] + list(b) + [node_count - 2]
+            path_length = time_limit
+            for j in range(len(path)-1):
+                path_length -= times[path[j]+1][path[j+1]+1]
+            if path_length >= 0:
+                return sorted(list(b))
+    return []
+
+print(solution([[0, 2, 2, 2, -1], [9, 0, 2, 2, -1], [9, 3, 0, 2, -1], 
+[9, 3, 2, 0, -1], [9, 3, 2, 2, 0]], 1))
