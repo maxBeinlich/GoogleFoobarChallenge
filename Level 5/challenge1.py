@@ -80,9 +80,58 @@ Input:
 solution.solution([ [True, False, True, False, False, True, True, True], 
                     [True, False, True, False, False, False, True, False], 
                     [True, True, True, False, False, False, True, False], 
-                    [True, False, True, False, False, False, True, False], 
-                    [True, False, True, False, False, True, True, True]
+                    [True, False, True, False, False, False, True, False],
+                    [True, False, True, False, False, True, True, True] 
                 ])
 Output:
     254
 """
+
+P = [(0,0),(1,0),(0,1),(1,1)]
+
+def prev_cols(col, cache):
+    cache_value = cache.setdefault(col, [])
+    if not cache_value: 
+        cols = []
+        if len(col) > 1:
+            cols = prev_cols(col[:-1], cache)
+        else:
+            cols = [i for i in P if not col[-1] or sum(i) < 2]
+        for c in cols:
+            for p in P:
+                m = [(c[0] % 2 != 0, c[1] % 2 != 0)] + [p]
+                ml = len(m)
+                if (m[ml-2][0] + m[ml-2][1] + m[ml-1][0] + m[ml-1][1] == 1) == col[-1]:
+                    r = (c[0] << 1 | p[0], c[1] << 1 | p[1])
+                    cache_value.append(r)
+    return cache_value
+
+def solution(g):
+    g = list(zip(*g))
+    cache = {}
+    d = {}
+    [d.setdefault(b, []).append(a) for a, b in prev_cols(g[0], cache)]
+    counter_dict = {}
+    for k in d:
+        counter_dict[k] = len(d[k])
+
+    for col in range(1, len(g)):
+        cols = prev_cols(g[col], cache)
+        d = {}
+        [d.setdefault(b, []).append(a) for a, b in cols]
+        new_dict = {}
+        for k in d:
+            n = 0
+            for i in d[k]:
+                n += counter_dict[i] if i in counter_dict else 0
+            new_dict[k] = n
+        counter_dict = new_dict
+
+    return sum(counter_dict.values())
+
+
+print(solution([[True, False, True], 
+                [False, True, False], 
+                [True, False, True]
+                ]))
+
