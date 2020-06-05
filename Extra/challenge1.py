@@ -57,3 +57,24 @@ solution.solution('5')
 Output:
     19
 """
+
+SQRT2_MINUS_ONE = 4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727
+
+def p(n):
+    nprime = (SQRT2_MINUS_ONE*n)//(10**100)
+    return nprime
+
+def s(n):
+    if n == 1:
+        return 1
+    if n < 1:
+        return 0
+    nprime = p(n)
+    r = n*nprime+n*(n+1)/2-nprime*(nprime+1)/2 - s(nprime)
+    return r
+
+def solution(n):
+    n = long(n)
+    return str(s(n))
+
+print(solution("86032128652"))
