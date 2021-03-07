@@ -11,3 +11,9 @@ Google Foobar is an invitation only, coding challenge originally created for hir
 This repository containes the solutions from my personal runthrough of the challenge.
 
 I **do not** incentivise cheating. 
+
+## Structure
+
+Every solution is structured in the same manner, starting with the challenge text and given test cases.
+
+After that the solution function is implemented and called with the first available test case.
